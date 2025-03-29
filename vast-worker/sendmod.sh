@@ -1,5 +1,8 @@
 #!/bin/bash
 
+server_url=$1
+write_key=$2
+
 json_output="{\"public_ip\": \"$(curl ipinfo.io/ip)\", \"ip_map\": {"
 
 append_range_to_body() {
@@ -20,5 +23,5 @@ append_range_to_body 50000 51024
 json_output="${json_output%,}}}"
 
 echo $json_output
-# curl -X POST $1
+curl -X POST $server_url/set-mapping -H "X-Write-Key: $write_key" -d "$json_output"
 
